@@ -23,7 +23,8 @@ LETTRE : a|..|z|A|..|Z
 NUM : CHIFFRE [ CHIFFRE ]
 ID : [ . | ] [LETTRE [ LETTRE | CHIFFRE | . | _ ]]
 AFFECTATION : ID AFFOP EXPR
-EXPR :
+EXPR : TERM [ARTHOP TERM]
+TERM : ID | NUM | ( EXPR )
 SI : if ( CONDS ) { INST } [else { INST } |  ]
 BOUCLE : BOUCLE_FOR | BOUCLE_WHILE
 BOUCLE_FOR : while ( CONDS ) { INST }
@@ -33,6 +34,6 @@ PRINT : print ( VAR )
 INPUT : ID <- readline(prompt"//msg")
 RELOP : == | != | < | <= | > | >=
 AFFOP : <- | <<- | = | -> | ->>
-ARTHOP : + | - | * | / 
+ARTHOP : + | - | * | /
 FUNCTION : ID AFFOP function (VAR) { INSTS return(VAR)}
 VAL : LOGICAL | NUMERIC | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR | LIST | MATRICE | ARRAY
