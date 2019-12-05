@@ -21,15 +21,17 @@ function_name <- function(var) {
 CHIFFRE : 0|..|9
 LETTRE : a|..|z|A|..|Z
 NUM : CHIFFRE [ CHIFFRE ]
-ID : [ . | ] [LETTRE [ LETTRE | CHIFFRE | . | _ ]]
+ID : [ . | epsilon ] [LETTRE [ LETTRE | CHIFFRE | . | _ ]]
 AFFECTATION : ID AFFOP EXPR
 EXPR : TERM [ARTHOP TERM]
 TERM : ID | NUM | ( EXPR )
-SI : if ( CONDS ) { INST } [else { INST } |  ]
+SI : if ( CONDS ) { INST } [ else { INST } | epsilon ]
 BOUCLE : BOUCLE_FOR | BOUCLE_WHILE
-BOUCLE_FOR : while ( CONDS ) { INST }
+BOUCLE_WHILE : while ( COND ) { INST }
+BOUCLE_FOR : for ( SEG ) { INST }
 CONDS : [!]COND [ || COND | && COND]
-COND : VAR RELOP VAR
+COND1 : [!]COND2
+COND2 : VAR RELOP VAR
 PRINT : print ( VAR )
 INPUT : ID <- readline(prompt"//msg")
 RELOP : == | != | < | <= | > | >=
