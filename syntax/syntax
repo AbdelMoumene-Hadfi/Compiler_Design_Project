@@ -13,10 +13,17 @@ else {
   //do_something
 }
 ///
+ifelse ( cond , x , y)
+///
 function_name <- function(var) {
   //do_something
   return(var)
 }
+///
+  Rules for writing Identifiers in R :
+* Identifiers can be a combination of letters, digits, period (.) and underscore (_).
+* It must start with a letter or a period. If it starts with a period, it cannot be followed by a digit.
+* Reserved words in R cannot be used as identifiers.
 ///
 CHIFFRE : 0|..|9
 LETTRE : a|..|z|A|..|Z
@@ -41,6 +48,10 @@ FUNCTION : ID AFFOP function (VAR) { INSTS return(VAR)}
 VAL : LOGICAL | NUMERIC | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR | LIST | MATRICE | ARRAY
 ///
 TOKENS :
-IF_TOKEN , ELSE_TOKEN , REPEAT_TOKEN , WHILE_TOKEN , FUNCTION_TOKEN , FOR_TOKEN , IN_TOKEN , NEXT_TOKEN , BREAK_TOKEN , TRUE_TOKEN , FALSE_TOKEN , NULL_TOKEN , Inf_TOKEN , NaN_TOKEN ,
-NA_INTEGER_TOKEN , NA_REAL_TOKEN , NA_COMPLEX_TOKEN , NA_CHARACTER_TOKEN , PLUS_TOKEN , MOINS_TOKEN , MULT_TOKEN , DIV_TOKEN , EXPONENT_TOKEN , MODULUS_TOKEN , INT_DIV_TOKEN ,
-INF_TOKEN , SUP_TOKEN , INFEG_TOKEN , SUPEG_TOKEN , EQUAL_TOKEN , NOT_EQUAL_TOKEN , LOGICAL_NOT_TOKEN , LOGICAL_AND_TOKEN , LOGICAL_OR_TOKEN , LEFT_ASGN_TOKEN , RIGHT_ASGN_TOKEN .
+IF_TOKEN ( if ), ELSE_TOKEN ( else ), REPEAT_TOKEN ( repeat ), WHILE_TOKEN ( while ), FUNCTION_TOKEN ( function ), FOR_TOKEN ( for ), IN_TOKEN ( in ), NEXT_TOKEN ( next ) , BREAK_TOKEN ( break ), TRUE_TOKEN ( true ),
+FALSE_TOKEN ( false ) , NULL_TOKEN ( null ), Inf_TOKEN , NaN_TOKEN ,
+NA_INTEGER_TOKEN , NA_REAL_TOKEN , NA_COMPLEX_TOKEN , NA_CHARACTER_TOKEN ,
+ADD_TOKEN ( + ), SUB_TOKEN ( - ), MULT_TOKEN ( * ), DIV_TOKEN ( / ), EXPONENT_TOKEN ( ^ ), MODULUS_TOKEN ( %% ), INT_DIV_TOKEN ( %/% ),
+INF_TOKEN ( < ), SUP_TOKEN ( > ) , INFEG_TOKEN ( <= ), SUPEG_TOKEN ( >= ) , EQUALTO_TOKEN ( == ), NOT_EQUAL_TOKEN ( != ),
+LOGICAL_NOT_TOKEN ( ! ), LOGICAL_AND_TOKEN ( && ), LOGICAL_OR_TOKEN ( || ) , ELEMENTWISE_LOGICAL_AND_TOKEN ( & ) , ELEMENTWISE_LOGICAL_OR_TOKEN ( | ) ,
+LEFT_ASGN_TOKEN ( <- , <<- , = ), RIGHT_ASGN_TOKEN ( -> , ->> ).
