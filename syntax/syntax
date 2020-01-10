@@ -25,27 +25,36 @@ function_name <- function(var) {
 * It must start with a letter or a period. If it starts with a period, it cannot be followed by a digit.
 * Reserved words in R cannot be used as identifiers.
 ///
-CHIFFRE : 0|..|9
-LETTRE : a|..|z|A|..|Z
-NUM : CHIFFRE [ CHIFFRE ]
-ID : [ . | epsilon ] [LETTRE [ LETTRE | CHIFFRE | . | _ ]]
-AFFECTATION : ID AFFOP EXPR
-EXPR : TERM [ARTHOP TERM]
-TERM : ID | NUM | ( EXPR )
-SI : if ( CONDS ) { INST } [ else { INST } | epsilon ]
-BOUCLE : BOUCLE_FOR | BOUCLE_WHILE
-BOUCLE_WHILE : while ( COND ) { INST }
-BOUCLE_FOR : for ( SEG ) { INST }
-CONDS : [!]COND [ || COND | && COND]
-COND1 : [!]COND2
-COND2 : VAR RELOP VAR
-PRINT : print ( VAR )
-INPUT : ID <- readline(prompt"//msg")
-RELOP : == | != | < | <= | > | >=
-AFFOP : <- | <<- | = | -> | ->>
-ARTHOP : + | - | * | /
-FUNCTION : ID AFFOP function (VAR) { INSTS return(VAR)}
-VAL : LOGICAL | NUMERIC | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR | LIST | MATRICE | ARRAY
+CHIFFRE       : "0"|..|"9"
+LETTRE        : "a"|..|"z"|"A"|..|"Z"
+CHARACTER     : (""" | "'") [LETTRE | CHIFFRE]¹ (""" | "'")
+HEX           : "0"|..|"9"|"A"|..|"F"|"a"|..|"f"
+NUM           : CHIFFRE¹ | "0" ("x"|"X") HEX¹
+INTEGER       : [CHIFFRE]¹ "L"
+DOUBLE        : [CHIFFRE]¹ "." [CHIFFRE]¹ ["L"]
+COMPLEX       : [DOUBLE]¹ ("+"|"-")  NUM "i"
+ID            : [ "." | "epsilon" ] [LETTRE [ LETTRE | CHIFFRE | "." | "_" ]]
+AFFECTATION   : AFF_RIGHT | AFF_LEFT
+AFF_RIGHT     : EXPR AFF_RIGHT ID
+AFF_LEFT      : ID AFF_LEFT EXPR | FUNCTION
+EXPR          : TERM [ARTHOP TERM]
+TERM          : ID | NUM | "(" EXPR ")"
+SI            : if "(" CONDS ")" "{" INST "}" [ else "{" INST "}" | "epsilon" ]
+BOUCLE        : BOUCLE_FOR | BOUCLE_WHILE
+BOUCLE_WHILE  : while "(" COND ")" "{" INST "}"
+BOUCLE_FOR    : for "(" SEG ")" "{" INST "}"
+COND          : COND1 [ "||" COND1 | "&&" COND1 ]
+COND1         : ["("] COND2 [")"]
+COND2         : ["!"] COND3
+COND3         : "TRUE" | "FALSE" | EXPR | COND
+PRINT         : print "(" EXPR ")"
+INPUT         : ID "<-" readline("//msg")
+RELOP         : "==" | "!=" | "<" | "<=" | ">" | ">="
+AFFOP_LEFT    : "<-" | "<<-" | "="
+AFFOP_RIGHT   : "->" | "->>"
+ARTHOP        : "+" | "-" | "*" | "/" | "^" | "%%" | "%/%"
+FUNCTION      : "function" "(" VAR_FUNCTION ")" ["{"] INSTS ["return" "("] VAR [")"] ["}"]
+VAL           : LOGICAL | NUMERIC | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR | LIST | MATRICE | ARRAY
 ///
 TOKENS :
 IF_TOKEN ( if ), ELSE_TOKEN ( else ), REPEAT_TOKEN ( repeat ), WHILE_TOKEN ( while ), FUNCTION_TOKEN ( function ), FOR_TOKEN ( for ), IN_TOKEN ( in ), NEXT_TOKEN ( next ) , BREAK_TOKEN ( break ), TRUE_TOKEN ( true ),
@@ -55,3 +64,4 @@ ADD_TOKEN ( + ), SUB_TOKEN ( - ), MULT_TOKEN ( * ), DIV_TOKEN ( / ), EXPONENT_TO
 INF_TOKEN ( < ), SUP_TOKEN ( > ) , INFEG_TOKEN ( <= ), SUPEG_TOKEN ( >= ) , EQUALTO_TOKEN ( == ), NOT_EQUAL_TOKEN ( != ),
 LOGICAL_NOT_TOKEN ( ! ), LOGICAL_AND_TOKEN ( && ), LOGICAL_OR_TOKEN ( || ) , ELEMENTWISE_LOGICAL_AND_TOKEN ( & ) , ELEMENTWISE_LOGICAL_OR_TOKEN ( | ) ,
 LEFT_ASGN_TOKEN ( <- , <<- , = ), RIGHT_ASGN_TOKEN ( -> , ->> ).
+///
