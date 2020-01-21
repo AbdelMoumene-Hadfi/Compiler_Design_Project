@@ -27,18 +27,18 @@ function_name <- function(var) {
 ///
 CHIFFRE       : "0"|..|"9"
 LETTRE        : "a"|..|"z"|"A"|..|"Z"
-CHARACTER     : (""" | "'") [LETTRE | CHIFFRE]¹ (""" | "'")
+CHARACTER     : (""" | "'") [ANY]¹ (""" | "'")
 HEX           : "0"|..|"9"|"A"|..|"F"|"a"|..|"f"
 NUM           : CHIFFRE¹ | "0" ("x"|"X") HEX¹
 INTEGER       : [CHIFFRE]¹ "L"
-DOUBLE        : [CHIFFRE]¹ "." [CHIFFRE]¹ ["L"]
+DOUBLE        : [CHIFFRE]¹ "." [CHIFFRE]¹ ["L"] // this part
 COMPLEX       : [DOUBLE]¹ ("+"|"-")  NUM "i"
-ID            : [ "." | "epsilon" ] [LETTRE [ LETTRE | CHIFFRE | "." | "_" ]]
+ID            : ( "." | "epsilon" ) (LETTRE ( LETTRE | CHIFFRE | "." | "_" ))
 AFFECTATION   : AFF_RIGHT | AFF_LEFT
 AFF_RIGHT     : EXPR AFF_RIGHT ID
 AFF_LEFT      : ID AFF_LEFT EXPR | FUNCTION
 EXPR          : TERM [ARTHOP TERM]
-TERM          : ID | NUM | "(" EXPR ")"
+TERM          : ID | NUM | CHARACTER | "(" EXPR ")"
 SI            : if "(" CONDS ")" "{" INST "}" [ else "{" INST "}" | "epsilon" ]
 BOUCLE        : BOUCLE_FOR | BOUCLE_WHILE
 BOUCLE_WHILE  : while "(" COND ")" "{" INST "}"
@@ -58,10 +58,10 @@ VAL           : LOGICAL | NUMERIC | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR
 ///
 TOKENS :
 IF_TOKEN ( if ), ELSE_TOKEN ( else ), REPEAT_TOKEN ( repeat ), WHILE_TOKEN ( while ), FUNCTION_TOKEN ( function ), FOR_TOKEN ( for ), IN_TOKEN ( in ), NEXT_TOKEN ( next ) , BREAK_TOKEN ( break ), TRUE_TOKEN ( true ),
-FALSE_TOKEN ( false ) , NULL_TOKEN ( null ), Inf_TOKEN , NaN_TOKEN ,
+FALSE_TOKEN ( false ) , NULL_TOKEN ( null ), PRINT_TOKEN ( print ) , READ_LINE_TOKEN ( readline ) , RETURN_TOEKN ( return ) , Inf_TOKEN , NaN_TOKEN ,
 NA_INTEGER_TOKEN , NA_REAL_TOKEN , NA_COMPLEX_TOKEN , NA_CHARACTER_TOKEN ,
 ADD_TOKEN ( + ), SUB_TOKEN ( - ), MULT_TOKEN ( * ), DIV_TOKEN ( / ), EXPONENT_TOKEN ( ^ ), MODULUS_TOKEN ( %% ), INT_DIV_TOKEN ( %/% ),
 INF_TOKEN ( < ), SUP_TOKEN ( > ) , INFEG_TOKEN ( <= ), SUPEG_TOKEN ( >= ) , EQUALTO_TOKEN ( == ), NOT_EQUAL_TOKEN ( != ),
 LOGICAL_NOT_TOKEN ( ! ), LOGICAL_AND_TOKEN ( && ), LOGICAL_OR_TOKEN ( || ) , ELEMENTWISE_LOGICAL_AND_TOKEN ( & ) , ELEMENTWISE_LOGICAL_OR_TOKEN ( | ) ,
-LEFT_ASGN_TOKEN ( <- , <<- , = ), RIGHT_ASGN_TOKEN ( -> , ->> ).
+LEFT_ASGN_TOKEN ( <- , <<- , = ), RIGHT_ASGN_TOKEN ( -> , ->> ) , PO_TOKEN ( ( ) , PF_TOKEN ( ) ) , AO_TOKEN ( { ) , AF_TOKEN ( } ) ,
 ///
