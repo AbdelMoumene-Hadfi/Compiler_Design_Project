@@ -64,4 +64,5 @@ ADD_TOKEN ( + ), SUB_TOKEN ( - ), MULT_TOKEN ( * ), DIV_TOKEN ( / ), EXPONENT_TO
 INF_TOKEN ( < ), SUP_TOKEN ( > ) , INFEG_TOKEN ( <= ), SUPEG_TOKEN ( >= ) , EQUALTO_TOKEN ( == ), NOT_EQUAL_TOKEN ( != ),
 LOGICAL_NOT_TOKEN ( ! ), LOGICAL_AND_TOKEN ( && ), LOGICAL_OR_TOKEN ( || ) , ELEMENTWISE_LOGICAL_AND_TOKEN ( & ) , ELEMENTWISE_LOGICAL_OR_TOKEN ( | ) ,
 LEFT_ASGN_TOKEN ( <- , <<- , = ), RIGHT_ASGN_TOKEN ( -> , ->> ) , PO_TOKEN ( ( ) , PF_TOKEN ( ) ) , AO_TOKEN ( { ) , AF_TOKEN ( } ) ,
+POINT_TOKEN ( . ) , VIR_TOKEN ( , ) , TWO_POINT_TOKEN ( : ) , G_TOKEN ( " ) , G_TOKEN ( ' ) 
 ///
