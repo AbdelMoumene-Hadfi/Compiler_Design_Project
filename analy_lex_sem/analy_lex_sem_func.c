@@ -1,6 +1,15 @@
 #include "analy_lex_sem_func.h"
 #include "analy_lex_sem_dec.h"
 
+void push() {
+  Sym_Arr_Struct *new_node = (Sym_Arr_Struct*)malloc(sizeof(Sym_Arr_Struct));
+  new_node->data = (Sym_Struct*)malloc(sizeof(Sym_Struct));
+  while(test->next != NULL) {
+    test=test->next;
+  }
+  test->next=(Sym_Arr_Struct*)malloc(sizeof(Sym_Arr_Struct));
+  test->next=new_node;
+}
 void Next_Car() {
   Car_Cour = fgetc(file);
 }
@@ -29,6 +38,34 @@ void Next_Number() {
   }
   if(count_car>=11) {}
   Token_Cour->TOKEN = NUM_TOKEN ;
+}
+void Next_Character() {
+  int count_car = 0 ;
+  const char type_start_char = Car_Cour ;
+  *(Token_Cour->WORD+count_car)=Car_Cour;
+  count_car++;
+  Next_Car();
+  while(1) {
+    if(Car_Cour == type_start_char) {
+      if(strcmp(*(Token_Cour->WORD+count_car-1),'\\')==0) {}
+      else {
+        Token_Cour->TOKEN = CHARACTER_TOKEN ;
+        break;
+      }
+    }
+    *(Token_Cour->WORD+count_car)=Car_Cour;
+    count_car++;
+    Next_Car();
+  }
+  if(type_start_char == '\'') {
+    Token_Cour->TOKEN = APOST_TOKEN ;
+    *Token_Cour->WORD = '\'' ;
+  }
+  else {
+    Token_Cour->TOKEN = GUIL_TOKEN ;
+    *Token_Cour->WORD = '"' ;
+  }
+  Next_Car();
 }
 void Check_Token() {
   if(strcmp("if",Token_Cour->WORD)==0) {
@@ -100,6 +137,9 @@ void Next_Sym() {
   switch(Car_Cour) {
     case 10 : Next_Car(); break;
     case 32 : Next_Car(); break;
+    case ';': Token_Cour->TOKEN = PV_TOKEN ;
+              *Token_Cour->WORD = ';' ;
+              Next_Car(); break;
     case '+': Token_Cour->TOKEN = ADD_TOKEN ;
               *Token_Cour->WORD = '+' ;
               Next_Car(); break;
@@ -235,6 +275,8 @@ void Next_Sym() {
               *Token_Cour->WORD = '}' ;
               Next_Car(); break;
     //
+    case '\'' :
+    case '"'  : Next_Character(); break;
     default : if(('a'<=Car_Cour && Car_Cour<='z')||('A'<=Car_Cour && Car_Cour<='Z')){Next_Word();}
               else if('0'<=Car_Cour && Car_Cour<='9') {Next_Number();}
               else {Next_Car();}
