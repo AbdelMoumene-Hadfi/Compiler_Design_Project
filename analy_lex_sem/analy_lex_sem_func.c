@@ -2,13 +2,30 @@
 #include "analy_lex_sem_dec.h"
 
 void push() {
-  Sym_Arr_Struct *new_node = (Sym_Arr_Struct*)malloc(sizeof(Sym_Arr_Struct));
-  new_node->data = (Sym_Struct*)malloc(sizeof(Sym_Struct));
-  while(test->next != NULL) {
-    test=test->next;
+  Sym_Arr_Struct *current = Head_Arr_Symb;
+  if(Head_Arr_Symb == NULL) {
+    Head_Arr_Symb->Data = Token_Cour ;
+    Head_Arr_Symb->next = NULL ;
+ }
+  else {
+    while(current->next != NULL) {
+      current=current->next;
+    }
+    current->next=(Sym_Arr_Struct*)malloc(sizeof(Sym_Arr_Struct));
+    current->next->Data = (Sym_Struct*)malloc(sizeof(Sym_Struct));
+    current->next->Data->WORD = (char*)malloc(21);
+    current->next->Data->TOKEN = Token_Cour->TOKEN ;
+    memcpy(current->next->Data->WORD,Token_Cour->WORD,sizeof(Token_Cour->WORD));
+    current->next->next = NULL ;
+ }
+}
+void show() {
+  Sym_Arr_Struct *current = Head_Arr_Symb;
+  while(current->next != NULL) {
+    printf("%s ----> %s\n",ARR_TOK[current->next->Data->TOKEN].TOKENS,current->next->Data->WORD);
+    current=current->next;
   }
-  test->next=(Sym_Arr_Struct*)malloc(sizeof(Sym_Arr_Struct));
-  test->next=new_node;
+
 }
 void Next_Car() {
   Car_Cour = fgetc(file);
