@@ -53,6 +53,7 @@ void Next_Word() {
 void Next_Number() {
   int count_car = 0 ;
   *(Token_Cour->WORD+count_car)=Car_Cour;
+  count_car++;
   Next_Car();
   if(Car_Cour == 'x' || Car_Cour == 'X') {
     *(Token_Cour->WORD+count_car)=Car_Cour;
@@ -76,8 +77,9 @@ void Next_Number() {
       count_car++;
       Next_Car();
     }
+    Token_Cour->TOKEN = NUM_TOKEN ;
   }
-  Token_Cour->TOKEN = NUM_TOKEN ;
+
 }
 void Next_Character() {
   int count_car = 0 ;
@@ -330,6 +332,13 @@ void Next_Sym() {
               *Token_Cour->WORD = '}' ;
               Next_Car(); break;
     //
+    case ':': Token_Cour->TOKEN = TWO_POINT_TOKEN ;
+              *Token_Cour->WORD = ':' ;
+              Next_Car(); break;
+    //
+    case ',': Token_Cour->TOKEN = VIR_TOKEN ;
+              *Token_Cour->WORD = ',' ;
+              Next_Car(); break;
     case '\'' :
     case '"'  : Next_Character(); break;
     default : if(('a'<=Car_Cour && Car_Cour<='z')||('A'<=Car_Cour && Car_Cour<='Z')||Car_Cour=='.'){Next_Word();}

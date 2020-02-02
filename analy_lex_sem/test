@@ -1,1 +1,8 @@
-a = a + 1
+x <- 1:6
+y <- x^2
+print(y)
+mean(y)
+f <- function(x, y) {
+  z <- 3 * x + 4 * y
+  return(z)
+}
