@@ -1,5 +1,6 @@
-#include "analy_lex_sem_func.h"
-#include "analy_lex_sem_dec.h"
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 
 void push() ;
 void show() ;

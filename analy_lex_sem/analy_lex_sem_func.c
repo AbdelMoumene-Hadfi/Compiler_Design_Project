@@ -25,7 +25,6 @@ void show() {
     printf("%s ----> %s\n",ARR_TOK[current->next->Data->TOKEN].TOKENS,current->next->Data->WORD);
     current=current->next;
   }
-
 }
 void Next_Car() {
   Car_Cour = fgetc(file);
@@ -34,13 +33,20 @@ void Next_Word() {
   int count_car = 0 ;
   *(Token_Cour->WORD+count_car)=Car_Cour;
   count_car++;
+  if(Car_Cour == '.') {
+    Next_Car();
+    if(!(('a'<=Car_Cour && Car_Cour<='z')||('A'<=Car_Cour && Car_Cour<='Z')||(Car_Cour == '.')||(Car_Cour == '_'))) {
+      //error
+    }
+    *(Token_Cour->WORD+count_car)=Car_Cour;
+    count_car++;
+  }
   Next_Car();
   while(('a'<=Car_Cour && Car_Cour<='z')||('A'<=Car_Cour && Car_Cour<='Z')||('0'<=Car_Cour && Car_Cour<='9')) {
     *(Token_Cour->WORD+count_car)=Car_Cour;
     count_car++;
     Next_Car();
   }
-  if(count_car>=20) {}
   //printf("%s\n",Token_Cour->WORD);
   Check_Token();
 }
@@ -48,24 +54,53 @@ void Next_Number() {
   int count_car = 0 ;
   *(Token_Cour->WORD+count_car)=Car_Cour;
   Next_Car();
-  while(('0'<=Car_Cour && Car_Cour<='9')) {
+  if(Car_Cour == 'x' || Car_Cour == 'X') {
     *(Token_Cour->WORD+count_car)=Car_Cour;
     count_car++;
     Next_Car();
+    while(('0'<=Car_Cour && Car_Cour<='9')||('a'<=Car_Cour && Car_Cour<='f')||('A'<=Car_Cour && Car_Cour<='F')) {
+      *(Token_Cour->WORD+count_car)=Car_Cour;
+      count_car++;
+      Next_Car();
+    }
+    Token_Cour->TOKEN = HEX_TOKEN ;
   }
-  if(count_car>=11) {}
+  else {
+    while(('0'<=Car_Cour && Car_Cour<='9')) {
+      *(Token_Cour->WORD+count_car)=Car_Cour;
+      count_car++;
+      Next_Car();
+    }
+    if(Car_Cour == 'L') {
+      *(Token_Cour->WORD+count_car)=Car_Cour;
+      count_car++;
+      Next_Car();
+    }
+  }
   Token_Cour->TOKEN = NUM_TOKEN ;
 }
 void Next_Character() {
   int count_car = 0 ;
   const char type_start_char = Car_Cour ;
+  if(type_start_char == '\'') {
+    Token_Cour->TOKEN = APOST_TOKEN ;
+    *Token_Cour->WORD = '\'' ;
+  }
+  else {
+    Token_Cour->TOKEN = GUIL_TOKEN ;
+    *Token_Cour->WORD = '"' ;
+  }
+  //
+  push();
+  Token_Cour->TOKEN = NULL_TOKEN ;
+  Token_Cour->WORD=memset(Token_Cour->WORD,'\0',sizeof(Token_Cour->WORD));
+  //
   *(Token_Cour->WORD+count_car)=Car_Cour;
   count_car++;
   Next_Car();
   while(1) {
     if(Car_Cour == type_start_char) {
-      if(strcmp(*(Token_Cour->WORD+count_car-1),'\\')==0) {}
-      else {
+      if(*(Token_Cour->WORD+count_car-1)!='\\') {
         Token_Cour->TOKEN = CHARACTER_TOKEN ;
         break;
       }
@@ -74,6 +109,9 @@ void Next_Character() {
     count_car++;
     Next_Car();
   }
+  push();
+  Token_Cour->TOKEN = NULL_TOKEN ;
+  Token_Cour->WORD=memset(Token_Cour->WORD,'\0',sizeof(Token_Cour->WORD));
   if(type_start_char == '\'') {
     Token_Cour->TOKEN = APOST_TOKEN ;
     *Token_Cour->WORD = '\'' ;
@@ -294,7 +332,7 @@ void Next_Sym() {
     //
     case '\'' :
     case '"'  : Next_Character(); break;
-    default : if(('a'<=Car_Cour && Car_Cour<='z')||('A'<=Car_Cour && Car_Cour<='Z')){Next_Word();}
+    default : if(('a'<=Car_Cour && Car_Cour<='z')||('A'<=Car_Cour && Car_Cour<='Z')||Car_Cour=='.'){Next_Word();}
               else if('0'<=Car_Cour && Car_Cour<='9') {Next_Number();}
               else {Next_Car();}
     }
@@ -302,14 +340,16 @@ void Next_Sym() {
 
 int analy_lex_sem_dec(char *filename) {
   file=fopen(filename,"a+");
+  Head_Arr_Symb = (Sym_Arr_Struct*)malloc(sizeof(Sym_Arr_Struct));
   Token_Cour = (Sym_Struct*)malloc(sizeof(Sym_Struct));
-  Token_Cour->WORD = (char*)malloc(21);
+  Token_Cour->WORD = (char*)malloc(90);
   Next_Car();
   while(Car_Cour != EOF) {
     Next_Sym();
     if(Token_Cour->TOKEN != NULL_TOKEN) {
-      printf("%s ----> %s\n",ARR_TOK[Token_Cour->TOKEN].TOKENS,Token_Cour->WORD);
+      push();
     }
   }
+  show();
   return 0;
 }
