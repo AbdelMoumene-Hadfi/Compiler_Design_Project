@@ -31,10 +31,10 @@ CHARACTER     : (""" | "'") [ANY]¹ (""" | "'")
 HEX           : "0"|..|"9"|"A"|..|"F"|"a"|..|"f"
 NUM           : CHIFFRE¹ | "0" ("x"|"X") HEX¹
 INTEGER       : [CHIFFRE]¹ "L"
-DOUBLE        : [CHIFFRE]¹ "." [CHIFFRE]¹ ["L"] // this part
+DOUBLE        : [CHIFFRE]¹ "." INTEGER // this part
 COMPLEX       : [DOUBLE]¹ ("+"|"-")  NUM "i"
 VECTOR        :  ":"
-ID            : ( "." | "epsilon" ) (LETTRE ( LETTRE | CHIFFRE | "." | "_" ))
+ID            : (".")⁰ ("_")¹ (LETTRE (LETTRE|CHIFFRE|"."|"_")⁰)
 AFFECTATION   : AFF_RIGHT | AFF_LEFT
 AFF_RIGHT     : EXPR AFF_RIGHT ID
 AFF_LEFT      : ID AFF_LEFT EXPR | FUNCTION
