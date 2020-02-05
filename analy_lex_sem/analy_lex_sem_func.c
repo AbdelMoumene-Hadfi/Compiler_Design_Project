@@ -192,7 +192,7 @@ void Next_Sym() {
   Token_Cour->TOKEN = NULL_TOKEN ;
   Token_Cour->WORD=memset(Token_Cour->WORD,'\0',sizeof(Token_Cour->WORD));
   switch(Car_Cour) {
-    case 10 : Next_Car(); break;
+    case 10 : current_line++;Next_Car(); break;
     case 32 : Next_Car(); break;
     case ';': Token_Cour->TOKEN = PV_TOKEN ;
               *Token_Cour->WORD = ';' ;

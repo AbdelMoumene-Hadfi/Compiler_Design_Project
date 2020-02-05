@@ -34,7 +34,7 @@ INTEGER       : [CHIFFRE]¹ "L"
 DOUBLE        : [CHIFFRE]¹ "." INTEGER // this part
 COMPLEX       : [DOUBLE]¹ ("+"|"-")  NUM "i"
 VECTOR        :  ":"
-ID            : (".")⁰ ("_")¹ (LETTRE (LETTRE|CHIFFRE|"."|"_")⁰)
+ID            : (".")⁰ ("_")¹ (LETTRE | epsilon) (LETTRE|CHIFFRE|"."|"_")⁰
 AFFECTATION   : AFF_RIGHT | AFF_LEFT
 AFF_RIGHT     : EXPR AFF_RIGHT ID
 AFF_LEFT      : ID AFF_LEFT EXPR | FUNCTION
