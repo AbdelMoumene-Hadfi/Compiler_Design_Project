@@ -38,6 +38,6 @@ TokenS_Struct ARR_TOK[55] = {{IF_TOKEN,"IF_TOKEN"},{ELSE_TOKEN,"ELSE_TOKEN"},{RE
                           {TWO_POINT_TOKEN,"TWO_POINT_TOKEN"},{VIR_TOKEN,"VIR_TOKEN"},
 };
 //
-int int current_line=0;
+int current_line=0;
 char Car_Cour;
 FILE *file;
