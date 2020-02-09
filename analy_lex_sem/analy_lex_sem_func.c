@@ -1,5 +1,6 @@
 #include "analy_lex_sem_func.h"
 #include "analy_lex_sem_dec.h"
+#include "../symbole_table/symb_table_func.h"
 
 void push() {
   Sym_Arr_Struct *current = Head_Arr_Symb;
@@ -171,6 +172,7 @@ void Check_Token() {
     Token_Cour->TOKEN = RETURN_TOKEN ;
   }
   else {
+    insert(Token_Cour->WORD,strlen(Token_Cour->WORD),UNDEF,current_line);
     Token_Cour->TOKEN = ID_TOKEN ;
   }
 }
@@ -352,6 +354,7 @@ int analy_lex_sem_dec(char *filename) {
   Head_Arr_Symb = (Sym_Arr_Struct*)malloc(sizeof(Sym_Arr_Struct));
   Token_Cour = (Sym_Struct*)malloc(sizeof(Sym_Struct));
   Token_Cour->WORD = (char*)malloc(90);
+  init_hash_table();
   Next_Car();
   while(Car_Cour != EOF) {
     Next_Sym();
@@ -360,5 +363,6 @@ int analy_lex_sem_dec(char *filename) {
     }
   }
   show();
+  symb_show();
   return 0;
 }

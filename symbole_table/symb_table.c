@@ -1,5 +1,6 @@
-#include "symb_table.h"
+#include "symb_table_func.h"
 int cur_scope =0;
+
 
 void init_hash_table() {
   symbol_table = malloc(SYMBOL_TABLE_SIZE * sizeof(List_Symb*));
