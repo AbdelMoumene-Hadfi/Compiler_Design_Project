@@ -43,7 +43,7 @@ TERM          : ID | NUM | CHARACTER | "(" EXPR ")"
 SI            : if "(" CONDS ")" "{" INST "}" [ else "{" INST "}" | "epsilon" ]
 BOUCLE        : BOUCLE_FOR | BOUCLE_WHILE
 BOUCLE_WHILE  : while "(" COND ")" "{" INST "}"
-BOUCLE_FOR    : for "(" SEG ")" "{" INST "}"
+BOUCLE_FOR    : for "(" ID in SEQ ")" "{" INST "}"
 COND          : COND1 [ "||" COND1 | "&&" COND1 ]
 COND1         : ["("] COND2 [")"]
 COND2         : ["!"] COND3

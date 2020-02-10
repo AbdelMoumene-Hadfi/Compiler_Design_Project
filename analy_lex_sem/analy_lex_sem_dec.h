@@ -38,6 +38,12 @@ TokenS_Struct ARR_TOK[55] = {{IF_TOKEN,"IF_TOKEN"},{ELSE_TOKEN,"ELSE_TOKEN"},{RE
                           {TWO_POINT_TOKEN,"TWO_POINT_TOKEN"},{VIR_TOKEN,"VIR_TOKEN"},
 };
 //
+typedef enum StatusFunction {
+  FALSE , TRUE
+}StatusFunction;
+StatusFunction STATUS_FUNCTION = FALSE ;
+int count_status = 0 ;
+//
 int current_line=0;
 char Car_Cour;
 FILE *file;

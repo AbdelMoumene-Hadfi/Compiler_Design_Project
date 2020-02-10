@@ -1,7 +1,7 @@
 #include "analy_lex_sem_func.h"
 #include "analy_lex_sem_dec.h"
 #include "../symbole_table/symb_table_func.h"
-
+extern int cur_scope ;
 void push() {
   Sym_Arr_Struct *current = Head_Arr_Symb;
   if(Head_Arr_Symb == NULL) {
@@ -145,6 +145,9 @@ void Check_Token() {
     Token_Cour->TOKEN = IN_TOKEN ;
   }
   else if(strcmp("function",Token_Cour->WORD)==0) {
+    cur_scope++;
+    count_status++;
+    STATUS_FUNCTION = TRUE ;
     Token_Cour->TOKEN = FUNCTION_TOKEN ;
   }
   else if(strcmp("next",Token_Cour->WORD)==0) {
@@ -332,7 +335,14 @@ void Next_Sym() {
     //
     case '}': Token_Cour->TOKEN = AF_TOKEN ;
               *Token_Cour->WORD = '}' ;
-              Next_Car(); break;
+              Next_Car();
+              if(STATUS_FUNCTION == TRUE) {
+                  count_status--;
+                  if(count_status==0) {
+                    STATUS_FUNCTION = FALSE ;
+                  }
+              };
+              break;
     //
     case ':': Token_Cour->TOKEN = TWO_POINT_TOKEN ;
               *Token_Cour->WORD = ':' ;

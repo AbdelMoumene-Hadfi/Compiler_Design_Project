@@ -5,7 +5,7 @@
 #define SYMBOL_TABLE_SIZE 211
 
 typedef enum {
-  UNDEF , COMPLEX , HEX , NUM , CHARACTER , FUNCTION , ARRAY , MATRIX
+  UNDEF , COMPLEX , HEX , NUM , CHARACTER , FUNCTION , ARRAY , MATRIX , VECTOR
 } Type_Sym ;
 
 typedef enum {
@@ -26,7 +26,8 @@ typedef struct Param_Function {
 
 typedef struct RefList{
   int LineNo ;
-  int TYPE ;
+  Type_Sym TYPE ;
+  int SCOPE ;
   struct RefList *NEXT ;
 } Ref_List;
 
