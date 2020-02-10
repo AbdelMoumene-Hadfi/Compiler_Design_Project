@@ -80,6 +80,22 @@ Type_Sym get_type(char *name) {
     return l->UnderType ;
   }
 }
+Param_Function def_param(Type_Sym type,char *name) {
+  Param_Function param ;
+  praram.TYPE = type ;
+  strncpy(param.NameParam,name);
+  return param ;
+}
+int func_declare(char *name ,Type_Sym returntype , int count_param , Param_Function *param) {
+  List_Symb *l = lookup(name);
+  if(l->TYPE == UNDEF) {
+    l->TYPE = FUNCTION ;
+  }
+  l->UnderType = returntype ;
+  l->ParamCount = count_param ;
+  l->PARAMS = param ;
+  return 0;
+}
 void hide_scope() {
   if(cur_scope>0) {
     cur_scope-- ;

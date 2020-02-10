@@ -25,6 +25,8 @@ function_name <- function(var) {
 * It must start with a letter or a period. If it starts with a period, it cannot be followed by a digit.
 * Reserved words in R cannot be used as identifiers.
 ///
+& , |: operations are possible only for numeric, logical or complex types
+///
 CHIFFRE       : "0"|..|"9"
 LETTRE        : "a"|..|"z"|"A"|..|"Z"
 CHARACTER     : (""" | "'") [ANY]¹ (""" | "'")
