@@ -1,4 +1,5 @@
 #include "symb_table_func.h"
+
 int cur_scope =0;
 
 
@@ -73,7 +74,7 @@ void set_type(char *name,Type_Sym type,Type_Sym undertype) {
 }
 Type_Sym get_type(char *name) {
   List_Symb *l = lookup(name);
-  if(l->TYPE == INT || COMPLEX || l->TYPE == HEX || l->TYPE == NUM || l->TYPE == CHARACTER) {
+  if(l->TYPE == NUM || l->TYPE == COMPLEX || l->TYPE == HEX || l->TYPE == NUM || l->TYPE == CHARACTER) {
     return l->TYPE ;
   }
   else if (l->TYPE == FUNCTION ||  l->TYPE == MATRIX || l->TYPE == VECTOR) {
@@ -82,8 +83,8 @@ Type_Sym get_type(char *name) {
 }
 Param_Function def_param(Type_Sym type,char *name) {
   Param_Function param ;
-  praram.TYPE = type ;
-  strncpy(param.NameParam,name);
+  param.TypeParam = type ;
+  strncpy(param.NameParam,name,strlen(name));
   return param ;
 }
 int func_declare(char *name ,Type_Sym returntype , int count_param , Param_Function *param) {

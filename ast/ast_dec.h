@@ -1,5 +1,9 @@
+#include "../symbole_table/symb_table_dec.h"
 typedef enum Node_Type {
   BASIC_NODE,
+  SIMPLE_NODE,
+  CONST_NODE,
+  DECL_NODE,
   //
   //
   IF_NODE,
@@ -16,6 +20,7 @@ typedef enum Node_Type {
   //
   FUNC_DECL_NODE,
   RETURN_NODE,
+
 } Node_Type;
 typedef enum Arithm_Op {
   ADD ,
@@ -38,16 +43,27 @@ typedef enum Rel_Op {
   GREATER_EQUAL ,
   LESS_EQUAL
 }Rel_Op;
-typedef enum Equ_OP {
+typedef enum Equ_Op {
   EQUAL ,
   NOT_EQUAL
-}Equ_OP ;
+}Equ_Op ;
 //
 typedef struct AST_NODE {
   Node_Type type ;
   struct AST_NODE *left ;
   struct AST_NODE *right ;
 }AST_NODE;
+//
+typedef struct AST_Node_Const{
+  Node_Type type ;
+  Type_Sym const_type;
+  Values val;
+}AST_Node_Const;
+//
+typedef struct AST_Node_Simple {
+  Node_Type type ;
+  int statement_type ;
+}AST_Node_Simple;
 //
 typedef struct AST_Node_Decl {
   Node_Type type ;
@@ -72,7 +88,7 @@ typedef struct AST_Node_Elsif {
   Node_Type type ;
   AST_NODE *condition;
   AST_NODE *elsif_branch;
-}AST_Node_If;
+}AST_Node_Elsif;
 ///
 typedef struct AST_Node_For {
   Node_Type type ;

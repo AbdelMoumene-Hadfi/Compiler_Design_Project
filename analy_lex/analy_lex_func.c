@@ -1,5 +1,5 @@
-#include "analy_lex_sem_func.h"
-#include "analy_lex_sem_dec.h"
+#include "analy_lex_func.h"
+#include "analy_lex_dec.h"
 #include "../symbole_table/symb_table_func.h"
 extern int cur_scope ;
 void push() {

@@ -1,4 +1,4 @@
-#include "analy_lex_sem_func.h"
+#include "analy_lex/analy_lex_func.h"
 
 int main(int *argv,char *argc[]) {
   if(argv<2) {

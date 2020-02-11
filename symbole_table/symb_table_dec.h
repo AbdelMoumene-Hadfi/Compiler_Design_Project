@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-
 #define SYMBOL_TABLE_SIZE 211
 
 typedef enum {
