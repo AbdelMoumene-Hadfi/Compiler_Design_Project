@@ -32,48 +32,88 @@ void INSTS() {
 
 void INST() {
   switch (Token_Cour->TOKEN) {
-    case PRINT_TOKEN : PRINT()      ; break ;
-    case WHILE_TOKEN : BOUCLE_FOR() ; break ;
-    case FOR_TOKEN   : BOUCLE_FOR() ; break ;
-    case IF_TOKEN    : IF()         ; break ;
-    case ID_TOKEN    : AFFECTATION(); break ;
+    case PRINT_TOKEN : Symbole_Suiv();PRINT()        ; break ;
+    case WHILE_TOKEN : Symbole_Suiv();BOUCLE_WHILE() ; break ;
+    case FOR_TOKEN   : Symbole_Suiv();BOUCLE_FOR()   ; break ;
+    case IF_TOKEN    : Symbole_Suiv();IF()           ; break ;
+    case ID_TOKEN    : Symbole_Suiv();ASSIGN()        ; break ;
 
   }
-  
 }
 
-void CONSTS(void) {
+void ASSIGN(void) {
   switch (Token_Cour->TOKEN) {
-    case CONST_TOKEN : Symbole_Suiv();
-                       Test_Symbole(ID_TOKEN,ID_TOKEN_ERREUR);
-                       Test_Symbole(EGAL_TOKEN,EGAL_TOKEN_ERREUR);
-                       Test_Symbole(NUM_TOKEN,NUM_TOKEN_ERREUR);
-                       Test_Symbole(PV_TOKEN,PV_TOKEN_ERREUR);
-                       while(Token_Cour->TOKEN == ID_TOKEN) {
-                         Symbole_Suiv();
-                         Test_Symbole(ID_TOKEN,ID_TOKEN_ERREUR);
-                         Test_Symbole(EGAL_TOKEN,EGAL_TOKEN_ERREUR);
-                         Test_Symbole(NUM_TOKEN,NUM_TOKEN_ERREUR);
-                         Test_Symbole(PV_TOKEN,PV_TOKEN_ERREUR);
-                       } ; break ;
-    case VAR_TOKEN :   break ;
-    case BEGIN_TOKEN : break ;
-    default          : Erreur(CONST_VAR_BEGIN_ERR) ; break ;
+    case LEFT_ASGN_TOKEN  : Symbole_Suiv();
+                            LEFT_ASSIGN();
+                            break ;
+    case RIGHT_ASGN_TOKEN : Symbole_Suiv();
+                            RIGHT_ASSIGN();
+                            break ;
+    case NUM_TOKEN        :       ;
+    case GUIL_TOKEN       :       ;
+    case PO_TOKEN         : Symbole_Suiv();
+                            EXPR();
+                            break ;
+    default               : Erreur(ASSGN_ERR) ; break ;
   }
 }
-void VARS(void) {
+void LEFT_ASSIGN(void) {
   switch (Token_Cour->TOKEN) {
-    case VAR_TOKEN : Symbole_Suiv();
-                     Test_Symbole(ID_TOKEN,ID_TOKEN_ERREUR);
-                     while(Token_Cour->TOKEN == VIR_TOKEN) {
-                        Symbole_Suiv();
-                        Test_Symbole(ID_TOKEN,ID_TOKEN_ERREUR);
-                     }
-                     Test_Symbole(PV_TOKEN,PV_TOKEN_ERREUR); ; break ;
-    case BEGIN_TOKEN : break ;
-    default          : Erreur(CONST_VAR_BEGIN_ERR) ; break ;
+    case FUNCTION_TOKEN   : Symbole_Suiv();
+                            FUNCTION();
+                            break ;
+    case READLINE_TOKEN   : Symbole_Suiv();
+                            READ_LINE();
+                            break ;
+    case ID_TOKEN         :       ;
+    case NUM_TOKEN        :       ;
+    case GUIL_TOKEN       :       ;
+    case PO_TOKEN         : Symbole_Suiv();
+                            EXPR();
+                            break ;
+    default               : Erreur(ASSGN_ERR) ; break ;
   }
 }
+void RIGHT_ASSIGN(void) {
+  Test_Symbole(ID_TOKEN,ID_TOKEN_ERREUR);
+}
+//
+void PRINT(void) {
+  Test_Symbole(PO_TOKEN,PO_TOKEN_ERREUR);
+  EXPR();
+  Test_Symbole(PF_TOKEN,PF_TOKEN_ERREUR);
+}
+//
+void IF(void) {
+  Test_Symbole(PO_TOKEN,PO_TOKEN_ERREUR);
+  COND();
+  Test_Symbole(PF_TOKEN,PF_TOKEN_ERREUR);
+  INSTS();
+  while(Token_Cour->TOKEN  == ELSE_TOKEN) {
+    INSTS();
+  }
+}
+//
+void BOUCLE_FOR(void) {
+  Test_Symbole(PO_TOKEN,PO_TOKEN_ERREUR);
+  Test_Symbole(ID_TOKEN,ID_TOKEN_ERREUR);
+  Test_Symbole(IN_TOKEN,IN_TOKEN_ERREUR);
+  SEQ();
+  Test_Symbole(PF_TOKEN,PO_TOKEN_ERREUR);
+  Test_Symbole(AO_TOKEN,PO_TOKEN_ERREUR);
+  INST();
+  Test_Symbole(AF_TOKEN,PO_TOKEN_ERREUR);
+  }
+//
+void BOUCLE_WHILE(void) {
+  Test_Symbole(PO_TOKEN,PO_TOKEN_ERREUR);
+  COND();
+  Test_Symbole(PF_TOKEN,PO_TOKEN_ERREUR);
+  Test_Symbole(AO_TOKEN,PO_TOKEN_ERREUR);
+  INST();
+  Test_Symbole(AF_TOKEN,PO_TOKEN_ERREUR);
+  }
+//
 void INSTS(void) {
   Test_Symbole(BEGIN_TOKEN,BEGIN_TOKEN_ERREUR);
   INST();
