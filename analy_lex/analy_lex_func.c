@@ -359,7 +359,7 @@ void Next_Sym() {
     }
 }
 
-int analy_lex_sem_dec(char *filename) {
+int analy_lex(char *filename) {
   file=fopen(filename,"a+");
   Head_Arr_Symb = (Sym_Arr_Struct*)malloc(sizeof(Sym_Arr_Struct));
   Token_Cour = (Sym_Struct*)malloc(sizeof(Sym_Struct));

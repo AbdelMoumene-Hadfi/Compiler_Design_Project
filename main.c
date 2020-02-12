@@ -5,5 +5,5 @@ int main(int *argv,char *argc[]) {
     printf("compiler:\033[1;31m fatal error:\033[0m no input files\ncompilation terminated.\n");
     return EXIT_FAILURE ;
   }
-  analy_lex_sem_dec(argc[1]);
+  analy_lex(argc[1]);
 }

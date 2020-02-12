@@ -39,7 +39,7 @@ VECTOR        :  ":"
 ID            : (".")⁰ ("_")¹ (LETTRE | epsilon) (LETTRE|CHIFFRE|"."|"_")⁰
 AFFECTATION   : AFF_RIGHT | AFF_LEFT
 AFF_RIGHT     : EXPR AFF_RIGHT ID
-AFF_LEFT      : ID AFF_LEFT EXPR | FUNCTION
+AFF_LEFT      : ID AFF_LEFT EXPR | FUNCTION | INPUT
 EXPR          : TERM [ARTHOP TERM]
 TERM          : ID | NUM | CHARACTER | "(" EXPR ")"
 SI            : if "(" CONDS ")" "{" INST "}" [ else "{" INST "}" | "epsilon" ]
@@ -51,13 +51,16 @@ COND1         : ["("] COND2 [")"]
 COND2         : ["!"] COND3
 COND3         : "TRUE" | "FALSE" | EXPR | COND
 PRINT         : print "(" EXPR ")"
-INPUT         : ID "<-" readline("//msg")
+INPUT         : readline("//msg")
 RELOP         : "==" | "!=" | "<" | "<=" | ">" | ">="
 AFFOP_LEFT    : "<-" | "<<-" | "="
 AFFOP_RIGHT   : "->" | "->>"
 ARTHOP        : "+" | "-" | "*" | "/" | "^" | "%%" | "%/%"
 FUNCTION      : "function" "(" VAR_FUNCTION ")" ["{"] INSTS ["return" "("] VAR [")"] ["}"]
 VAL           : LOGICAL | NUMERIC | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR | LIST | MATRICE | ARRAY
+///
+INSTS         : "{" INST  "}"
+INST          : ( AFFECTATION | SI | EXPR | BOUCLE  | PRINT | INSTS ) ";" 
 ///
 TOKENS :
 IF_TOKEN ( if ), ELSE_TOKEN ( else ), REPEAT_TOKEN ( repeat ), WHILE_TOKEN ( while ), FUNCTION_TOKEN ( function ), FOR_TOKEN ( for ), IN_TOKEN ( in ), NEXT_TOKEN ( next ) , BREAK_TOKEN ( break ), TRUE_TOKEN ( true ),
