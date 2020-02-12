@@ -31,8 +31,9 @@ INSTS         : "{" INST  "}"
 INST          : ( AFFECTATION | SI | EXPR | BOUCLE  | PRINT | INSTS ) ";"
 AFFECTATION   : ID ( AFF_RIGHT | AFF_LEFT )
 AFF_RIGHT     : ( EXPR | epsilon ) AFF_RIGHT ID
-EXPR          :  TERM  [ARTHOP  TERM]
-TERM          : NUM | CHARACTER | "(" EXPR ")" | epsilon
+EXPR          : TERM  [ARTHOP  TERM]
+TERM          : FACT  [MULTOP  FACT]
+FACT          : NUM | CHARACTER | "(" EXPR ")" | epsilon
 AFF_LEFT      : AFF_LEFT ( EXPR | FUNCTION | INPUT )
 SI            : if "(" COND ")" "{" INST "}" [ else "{" INST "}" | "epsilon" ]
 BOUCLE        : BOUCLE_FOR | BOUCLE_WHILE
@@ -57,13 +58,15 @@ ID            : (".")⁰ ("_")¹ (LETTRE | epsilon) (LETTRE|CHIFFRE|"."|"_")⁰
 COND          : COND1 [ "||" COND1 | "&&" COND1 ]
 COND1         : ["("] COND2 [")"]
 COND2         : ["!"] COND3
-COND3         : "TRUE" | "FALSE" | EXPR | COND
+COND3         : COND4 [ RELOP COND4]
+COND4         : "TRUE" | "FALSE" | EXPR
 //
 RELOP         : "==" | "!=" | "<" | "<=" | ">" | ">="
 AFFOP_LEFT    : "<-" | "<<-" | "="
 AFFOP_RIGHT   : "->" | "->>"
-ARTHOP        : "+" | "-" | "*" | "/" | "^" | "%%" | "%/%"
-VAL           : LOGICAL | NUMERIC | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR | LIST | MATRICE | ARRAY
+ARTHOP        : "+" | "-"
+MULTOP        : "*" | "/" | "^" | "%%" | "%/%"
+VAL           : BOOLEAN | NUMERIC | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR | LIST | MATRICE | ARRAY
 ///
 
 ///

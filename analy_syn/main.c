@@ -104,7 +104,6 @@ void BOUCLE_FOR(void) {
   INST();
   Test_Symbole(AF_TOKEN,PO_TOKEN_ERREUR);
   }
-//
 void BOUCLE_WHILE(void) {
   Test_Symbole(PO_TOKEN,PO_TOKEN_ERREUR);
   COND();
@@ -114,75 +113,65 @@ void BOUCLE_WHILE(void) {
   Test_Symbole(AF_TOKEN,PO_TOKEN_ERREUR);
   }
 //
-void INSTS(void) {
-  Test_Symbole(BEGIN_TOKEN,BEGIN_TOKEN_ERREUR);
-  INST();
-  while(Token_Cour->TOKEN == PV_TOKEN ) {
-    Symbole_Suiv();
-    INST();
-  }
-  Test_Symbole(END_TOKEN,END_TOKEN_ERREUR);
-}
-void INST(void) {
-  switch (Token_Cour->TOKEN) {
-    case BEGIN_TOKEN : INSTS() ; break ;
-    case ID_TOKEN    : AFFEC() ; break ;
-    case IF_TOKEN    : SI()    ; break ;
-    case WHILE_TOKEN : TANTQUE();break ;
-    case WRITE_TOKEN : ECRIRE(); break ;
-    case READ_TOKEN  : LIRE()  ; break ;
-    default          : Erreur(INST_ERR) ; break ;
-}
-void AFFEC(void) {
-  Test_Symbole(ID_TOKEN,ID_TOKEN_ERREUR);
-  Test_Symbole(AFFEC_TOKEN,AFFEC_TOKEN_ERREUR);
-  EXPR();
-}
-void SI(void) {
-  Test_Symbole(IF_TOKEN,IF_TOKEN_ERREUR);
-  COND();
-  Test_Symbole(THEN_TOKEN,THEN_TOKEN_ERREUR);
-  INST();
-}
-void TANTQUE(void) {
-  Test_Symbole(WHILE_TOKEN,WHILE_TOKEN_ERREUR);
-  COND();
-  Test_Symbole(DO_TOKEN,DO_TOKEN_ERREUR);
-  INST();
-}
-void ECRIRE(void) {
-  Test_Symbole(WRITE_TOKEN,WRITE_TOKEN_ERREUR);
-  Test_Symbole(PO_TOKEN,PO_TOKEN_ERREUR);
-  EXPR();
-  while(Token_Cour->TOKEN == VIR_TOKEN) {
-    Symbole_Suiv();
-    EXPR();
-  }
-  Test_Symbole(PF_TOKEN,PF_TOKEN_ERREUR);
-}
-void LIRE(void) {
-  Test_Symbole(READ_TOKEN,READ_TOKEN_ERREUR);
+void FUNC(void) {
   Test_Symbole(PO_TOKEN,PO_TOKEN_ERREUR);
   Test_Symbole(ID_TOKEN,ID_TOKEN_ERREUR);
-  while(Token_Cour->TOKEN == VIR_TOKEN) {
+  while( Token_Cour->TOKEN == VIR_TOKEN) {
     Symbole_Suiv();
     Test_Symbole(ID_TOKEN,ID_TOKEN_ERREUR);
   }
+  Test_Symbole(PF_TOKEN,PO_TOKEN_ERREUR);
+  Test_Symbole(AO_TOKEN,PO_TOKEN_ERREUR);
+  INST();
+  Test_Symbole(RETURN_TOKEN,RETURN_TOKEN_ERREUR);
+  Test_Symbole(PO_TOKEN,PO_TOKEN_ERREUR);
+  EXPR();
+  Test_Symbole(PF_TOKEN,PO_TOKEN_ERREUR);
+  Test_Symbole(AF_TOKEN,PO_TOKEN_ERREUR);
+}
+//
+void READ_LINE(void) {
+  Test_Symbole(PO_TOKEN,PO_TOKEN_ERREUR);
+  if(Token_Cour->TOKEN == GUIL_TOKEN ) {
+    Test_Symbole(CHARACTER_TOKEN,CHARACTER_TOKEN_ERREUR);
+    Test_Symbole(GUIL_TOKEN,GUIL_TOKEN_ERREUR);
+  }
   Test_Symbole(PF_TOKEN,PF_TOKEN_ERREUR);
 }
+//
 void COND(void) {
-  EXPR();
-  switch(Token_Cour->TOKEN) {
-    case EGAL_TOKEN: break;
-    case DIFF_TOKEN: break;
-    case INF_TOKEN:  break;
-    case SUP_TOKEN:  break;
-    case INFEG_TOKEN:break;
-    case SUPEG_TOKEN:break;
-    default: Erreur(COND_ERR) ; break ;
+  COND1();
+  while(Token_Cour->TOKEN == LOGICAL_AND_TOKEN || Token_Cour->TOKEN == LOGICAL_OR_TOKEN ) {
+    Symbole_Suiv();
+    COND1();
   }
-  EXPR();
 }
+void COND1(void) {
+  if(Token_Cour->TOKEN == PO_TOKEN ) {
+    COND2();
+    Test_Symbole(PF_TOKEN,PF_TOKEN_ERREUR);
+  }
+  COND2();
+}
+void COND2(void) {
+  if(Token_Cour->TOKEN == LOGICAL_NOT_TOKEN) {Symbole_Suiv();}
+  COND3();
+}
+void COND3(void) {
+  COND4() ;
+  while(Token_Cour->TOKEN == INF_TOKEN || Token_Cour->TOKEN == SUP_TOKEN || Token_Cour->TOKEN == INFEG_TOKEN || Token_Cour->TOKEN == SUPEG_TOKEN || Token_Cour->TOKEN == EQUALTO_TOKEN || Token_Cour->TOKEN == NOT_EQUAL_TOKEN) {
+    Symbole_Suiv();
+    COND4();
+  }
+}
+void COND4(void) {
+  switch(Token_Cour->TOKEN) {
+    case TRUE_TOKEN  : Symbole_Suiv() ; break ;
+    case FALSE_TOKEN : Symbole_Suiv() ; break ;
+    default          : Symbole_Suiv() ; EXPR(); break ;
+  }
+}
+//
 void EXPR(void) {
   TERM();
   while(Token_Cour->TOKEN == PLUS_TOKEN || Token_Cour->TOKEN == MOINS_TOKEN) {
@@ -199,10 +188,16 @@ void TERM(void) {
 }
 void FACT(void) {
   switch(Token_Cour->TOKEN) {
-    case ID_TOKEN : break ;
-    case PO_TOKEN : EXPR(); Test_Symbole(PF_TOKEN,PF_TOKEN_ERREUR); break ;
+    case NUM_TOKEN : Symbole_Suiv(); break ;
+    case ID_TOKEN  : Symbole_Suiv(); break ;
+    case GUIL_TOKEN : Symbole_Suiv();
+                      Test_Symbole(CHARACTER_TOKEN,CHARACTER_TOKEN_ERREUR);
+                      Test_Symbole(GUIL_TOKEN,GUIL_TOKEN_ERREUR);
+                      break ;
+    case PO_TOKEN  : EXPR(); Test_Symbole(PF_TOKEN,PF_TOKEN_ERREUR); break ;
   }
 }
+//
 int analy_syn() {
   (Sym_Arr_Struct*) Head_Arr_temp = Head_Arr_Symb ;
   Token_Cour = (Sym_Struct*)malloc(sizeof(Sym_Struct));
