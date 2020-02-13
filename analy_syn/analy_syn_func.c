@@ -21,6 +21,9 @@ void INSTS() {
   if(Token_Cour->TOKEN  == AO_TOKEN) {
     Symbole_Suiv();
     INST();
+    while(Token_Cour->TOKEN == PRINT_TOKEN || Token_Cour->TOKEN == WHILE_TOKEN || Token_Cour->TOKEN == FOR_TOKEN  || Token_Cour->TOKEN == IF_TOKEN  || Token_Cour->TOKEN == ID_TOKEN ) {
+      INST();
+    }
     Test_Symbole(AF_TOKEN,EXPECTED_TOKEN_AF);
     Test_Symbole(EOF_TOKEN,EXPECTED_TOKEN_EOF);
   }
@@ -63,7 +66,7 @@ void ASSIGN(void) {
     case LEFT_ASGN_TOKEN  : Symbole_Suiv();
                             LEFT_ASSIGN();
                             break ;
-   default                : EXPR();
+   default                : printf("expr\n");EXPR();
                             if(Token_Cour->TOKEN == RIGHT_ASGN_TOKEN) {
                               Symbole_Suiv();
                               RIGHT_ASSIGN();
@@ -150,6 +153,7 @@ void READ_LINE(void) {
 void COND(void) {
   COND1();
   while(Token_Cour->TOKEN == LOGICAL_AND_TOKEN || Token_Cour->TOKEN == LOGICAL_OR_TOKEN ) {
+    printf("and \n");
     Symbole_Suiv();
     COND1();
   }
@@ -168,6 +172,7 @@ void COND2(void) {
 void COND3(void) {
   COND4() ;
   while(Token_Cour->TOKEN == INF_TOKEN || Token_Cour->TOKEN == SUP_TOKEN || Token_Cour->TOKEN == INFEG_TOKEN || Token_Cour->TOKEN == SUPEG_TOKEN || Token_Cour->TOKEN == EQUALTO_TOKEN || Token_Cour->TOKEN == NOT_EQUAL_TOKEN) {
+    printf("inf");
     Symbole_Suiv();
     COND4();
   }

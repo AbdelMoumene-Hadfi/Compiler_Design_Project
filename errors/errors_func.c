@@ -27,5 +27,5 @@
    };
 int raise_error(ERRORS error) {
 	printf("Error number %i: %s on line %i \n", error, errors[error].ERROR_ST, current_line);
-	return 0;
+	exit(0);
 }

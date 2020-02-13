@@ -1,1 +1,4 @@
-f <- func(x+y,y) 
+a <- a + b
+if(a==3 && a<b ) {
+  print(a)
+}

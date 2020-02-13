@@ -219,7 +219,7 @@ void Next_Sym() {
                            }; break ;
                 default  : Token_Cour->TOKEN = SUB_TOKEN ;
                            *Token_Cour->WORD = '-' ;
-                           Next_Car(); break;
+                           break;
               }; break ;
     //
     case '*': Token_Cour->TOKEN = MULT_TOKEN ;
@@ -256,7 +256,7 @@ void Next_Sym() {
                            Next_Car(); break;
                 default  : Token_Cour->TOKEN = ELEMENTWISE_LOGICAL_AND_TOKEN ;
                            *Token_Cour->WORD = '&' ;
-                           Next_Car(); break;
+                           break;
               }; break ;
     //
     case '|': Next_Car();
@@ -266,7 +266,7 @@ void Next_Sym() {
                            Next_Car(); break;
                 default  : Token_Cour->TOKEN = ELEMENTWISE_LOGICAL_OR_TOKEN ;
                            *Token_Cour->WORD = '|' ;
-                           Next_Car(); break;
+                           break;
               }; break ;
     //
     case '=': Next_Car();
@@ -276,7 +276,7 @@ void Next_Sym() {
                            Next_Car(); break;
                 default  : Token_Cour->TOKEN = LEFT_ASGN_TOKEN ;
                            *Token_Cour->WORD = '=' ;
-                           Next_Car(); break;
+                           break;
               }; break ;
     //
     case '!': Next_Car();
@@ -286,7 +286,7 @@ void Next_Sym() {
                            Next_Car(); break;
                 default  : Token_Cour->TOKEN = LOGICAL_NOT_TOKEN ;
                            *Token_Cour->WORD = '!' ;
-                           Next_Car(); break;
+                            break;
               }; break ;
     //
     case '<': Next_Car();
@@ -308,7 +308,7 @@ void Next_Sym() {
                            }; break ;
                 default  : Token_Cour->TOKEN = INF_TOKEN ;
                            *Token_Cour->WORD = '<' ;
-                           Next_Car(); break;
+                            break;
               }; break ;
     //
     case '>': Next_Car();
@@ -318,7 +318,7 @@ void Next_Sym() {
                            Next_Car(); break;
                 default  : Token_Cour->TOKEN = SUP_TOKEN ;
                            *Token_Cour->WORD = '>' ;
-                           Next_Car(); break;
+                           break;
               }; break ;
     //
     case '(': Token_Cour->TOKEN = PO_TOKEN ;
@@ -379,6 +379,6 @@ int analy_lex(char *filename) {
   }
 
   show();
-  //symb_show();
+  symb_show();
   return 0;
 }
