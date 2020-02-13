@@ -31,4 +31,5 @@ void COND4(void) ;
 void EXPR(void) ;
 void TERM(void) ;
 void FACT(void) ;
+void CALL_FUNC(void) ;
 int analy_syn() ;

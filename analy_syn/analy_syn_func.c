@@ -39,7 +39,22 @@ void INST() {
     case WHILE_TOKEN : Symbole_Suiv();BOUCLE_WHILE() ; break ;
     case FOR_TOKEN   : Symbole_Suiv();BOUCLE_FOR()   ; break ;
     case IF_TOKEN    : Symbole_Suiv();IF()           ; break ;
-    case ID_TOKEN    : Symbole_Suiv();ASSIGN()        ; break ;
+    case ID_TOKEN    : Symbole_Suiv();ASSIGN()  ; break ;
+    case NUM_TOKEN   : EXPR();
+                       if(Token_Cour->TOKEN == RIGHT_ASGN_TOKEN) {
+                         Symbole_Suiv();
+                         RIGHT_ASSIGN();
+                      }; break ;
+    case GUIL_TOKEN  : EXPR();
+                       if(Token_Cour->TOKEN == RIGHT_ASGN_TOKEN) {
+                         Symbole_Suiv();
+                         RIGHT_ASSIGN();
+                      }; break ;
+    case PO_TOKEN    : EXPR();
+                       if(Token_Cour->TOKEN == RIGHT_ASGN_TOKEN) {
+                         Symbole_Suiv();
+                         RIGHT_ASSIGN();
+                      }; break ;
   }
 }
 
@@ -48,14 +63,11 @@ void ASSIGN(void) {
     case LEFT_ASGN_TOKEN  : Symbole_Suiv();
                             LEFT_ASSIGN();
                             break ;
-    case RIGHT_ASGN_TOKEN : Symbole_Suiv();
-                            RIGHT_ASSIGN();
-                            break ;
-    case NUM_TOKEN        :       ;
-    case GUIL_TOKEN       :       ;
-    case PO_TOKEN         : EXPR();
-                            break ;
-    default               : raise_error(ERR_ASSIGN) ; break ;
+   default                : EXPR();
+                            if(Token_Cour->TOKEN == RIGHT_ASGN_TOKEN) {
+                              Symbole_Suiv();
+                              RIGHT_ASSIGN();
+                            }; break ;
   }
 }
 void LEFT_ASSIGN(void) {
@@ -66,13 +78,7 @@ void LEFT_ASSIGN(void) {
     case READLINE_TOKEN   : Symbole_Suiv();
                             READ_LINE();
                             break ;
-    case ID_TOKEN         :       ;
-    case NUM_TOKEN        :       ;
-    case GUIL_TOKEN       :       ;
-    case PO_TOKEN         : Symbole_Suiv();
-                            EXPR();
-                            break ;
-    default               : raise_error(ERR_ASSIGN) ; break ;
+    default               : printf("inst");INST() ; break ;
   }
 }
 void RIGHT_ASSIGN(void) {
@@ -191,12 +197,26 @@ void TERM(void) {
 void FACT(void) {
   switch(Token_Cour->TOKEN) {
     case NUM_TOKEN : Symbole_Suiv(); break ;
-    case ID_TOKEN  : Symbole_Suiv(); break ;
-    case GUIL_TOKEN : printf("guil");Symbole_Suiv();
+    case ID_TOKEN  : Symbole_Suiv();
+                     if(Token_Cour->TOKEN == PO_TOKEN ) {
+
+                       Symbole_Suiv();
+                       CALL_FUNC();
+                       Test_Symbole(PF_TOKEN,EXPECTED_TOKEN_PF);
+                     }
+                     break ;
+    case GUIL_TOKEN : Symbole_Suiv();
                       Test_Symbole(CHARACTER_TOKEN,EXPECTED_TOKEN_CHARACTER);
                       Test_Symbole(GUIL_TOKEN,EXPECTED_TOKEN_GUIL);
                       break ;
-    case PO_TOKEN  : EXPR(); Test_Symbole(PF_TOKEN,EXPECTED_TOKEN_PF); break ;
+    case PO_TOKEN  : Symbole_Suiv();EXPR(); Test_Symbole(PF_TOKEN,EXPECTED_TOKEN_PF); break ;
+  }
+}
+void CALL_FUNC(void) {
+
+  EXPR();
+  while(Token_Cour->TOKEN == VIR_TOKEN) {
+    EXPR();
   }
 }
 //

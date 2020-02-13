@@ -15,7 +15,7 @@
      {EXPECTED_TOKEN_SUPEG,"unexpected '>='"},{EXPECTED_TOKEN_EQUALTO,"unexpected '=='"},{EXPECTED_TOKEN_NOT_EQUAL,"unexpected '!='"},
      {EXPECTED_TOKEN_LOGICAL_NOT,"unexpected 'not'"},{EXPECTED_TOKEN_LOGICAL_AND,"unexpected '&&'"},
      {EXPECTED_TOKEN_LOGICAL_OR,"unexpected '||'"},{EXPECTED_TOKEN_ELEMENTWISE_LOGICAL_AND,"unexpected 'and'"},
-     {EXPECTED_TOKEN_ELEMENTWISE_LOGICAL_OR,"unexpected 'ELEMENTWISE LOGICAL OR'"},{ERR_ASSIGN,"error in assignement"},
+     {EXPECTED_TOKEN_ELEMENTWISE_LOGICAL_OR,"unexpected 'ELEMENTWISE LOGICAL OR'"},{ERR_ASSIGN,"error in assignement"},{EXPECTED_TOKEN_LEFT_ASGN,"expected LEFT_ASGN_TOKEN"},
      {EXPECTED_TOKEN_PO,"unexpected 'PO'"},{EXPECTED_TOKEN_PF,"unexpected 'PF'"},
      {EXPECTED_TOKEN_AO,"unexpected 'AO'"},{EXPECTED_TOKEN_AF,"unexpected 'AF'"},{EXPECTED_TOKEN_PRINT,"unexpected 'print'"},
      {EXPECTED_TOKEN_READLINE,"unexpected 'readline'"},{EXPECTED_TOKEN_RETURN,"unexpected 'return'"},{EXPECTED_TOKEN_CHARACTER,"unexpected 'character'"},

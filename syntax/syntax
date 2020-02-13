@@ -28,19 +28,19 @@ function_name <- function(var) {
 & , |: operations are possible only for numeric, logical or complex types
 ///
 INSTS         : "{" INST  "}"
-INST          : ( AFFECTATION | SI | EXPR | BOUCLE  | PRINT | INSTS ) ";"
-AFFECTATION   : ID ( AFF_RIGHT | AFF_LEFT )
-AFF_RIGHT     : ( EXPR | epsilon ) AFF_RIGHT ID
+INST          : ( AFF_RIGHT | AFF_LEFT | SI | EXPR | BOUCLE  | PRINT | INSTS ) ";"
+AFF_RIGHT     :  EXPR  AFF_RIGHT ID
 EXPR          : TERM  [ARTHOP  TERM]
 TERM          : FACT  [MULTOP  FACT]
-FACT          : NUM | CHARACTER | "(" EXPR ")" | ARRAY | epsilon
-AFF_LEFT      : AFF_LEFT ( EXPR | FUNCTION | INPUT )
+FACT          : ID | NUM | CHARACTER | "(" EXPR ")" | ARRAY | CALL_FUNCTION
+AFF_LEFT      : ID AFF_LEFT INST
 SI            : if "(" COND ")" "{" INST "}" [ else "{" INST "}" | "epsilon" ]
 BOUCLE        : BOUCLE_FOR | BOUCLE_WHILE
 BOUCLE_WHILE  : while "(" COND ")" "{" INST "}"
 BOUCLE_FOR    : for "(" ID "in" SEQ ")" "{" INST "}"
 PRINT         : print "(" EXPR ")"
 INPUT         : readline("//msg")
+CALL_FUNCTION : ID (ID,)
 FUNCTION      : "function" "(" VAR_FUNCTION ")" ["{"] INST ["return" "("] VAR [")"] ["}"]
 //
 CHIFFRE       : "0"|..|"9"
@@ -51,7 +51,7 @@ NUM           : CHIFFRE¹ | "0" ("x"|"X") HEX¹
 INTEGER       : [CHIFFRE]¹ "L"
 DOUBLE        : [CHIFFRE]¹ "." INTEGER // this part
 COMPLEX       : [DOUBLE]¹ ("+"|"-")  NUM "i"
-VECTOR        :  ":" ID | NUM
+VECTOR        :  EXPR ":" EXPR
 ID            : (".")⁰ ("_")¹ (LETTRE | epsilon) (LETTRE|CHIFFRE|"."|"_")⁰
 //
 //
