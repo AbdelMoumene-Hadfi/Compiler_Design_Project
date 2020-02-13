@@ -1,4 +1,4 @@
-x <- 1:6
+x <- 1
 y <- "azer"
 print(y)
 mean(y)

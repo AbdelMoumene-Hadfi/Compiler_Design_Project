@@ -1,3 +1,7 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
 typedef enum {
   IF_TOKEN,ELSE_TOKEN,REPEAT_TOKEN,WHILE_TOKEN,FUNCTION_TOKEN,FOR_TOKEN,IN_TOKEN,NEXT_TOKEN,BREAK_TOKEN,TRUE_TOKEN,
   FALSE_TOKEN,NULL_TOKEN,NAN_TOKEN,NA_INTEGER_TOKEN,NA_REAL_TOKEN,NA_COMPLEX_TOKEN,NA_CHARACTER_TOKEN,
@@ -17,4 +21,5 @@ typedef struct sym_arr{
   struct sym_arr *next;
 } Sym_Arr_Struct ;
 extern Sym_Arr_Struct *Head_Arr_Symb;
+Sym_Arr_Struct *Head_Arr_temp;
 //

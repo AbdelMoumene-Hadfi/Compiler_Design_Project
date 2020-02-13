@@ -33,7 +33,7 @@ AFFECTATION   : ID ( AFF_RIGHT | AFF_LEFT )
 AFF_RIGHT     : ( EXPR | epsilon ) AFF_RIGHT ID
 EXPR          : TERM  [ARTHOP  TERM]
 TERM          : FACT  [MULTOP  FACT]
-FACT          : NUM | CHARACTER | "(" EXPR ")" | epsilon
+FACT          : NUM | CHARACTER | "(" EXPR ")" | ARRAY | epsilon
 AFF_LEFT      : AFF_LEFT ( EXPR | FUNCTION | INPUT )
 SI            : if "(" COND ")" "{" INST "}" [ else "{" INST "}" | "epsilon" ]
 BOUCLE        : BOUCLE_FOR | BOUCLE_WHILE
@@ -51,7 +51,7 @@ NUM           : CHIFFRE¹ | "0" ("x"|"X") HEX¹
 INTEGER       : [CHIFFRE]¹ "L"
 DOUBLE        : [CHIFFRE]¹ "." INTEGER // this part
 COMPLEX       : [DOUBLE]¹ ("+"|"-")  NUM "i"
-VECTOR        :  ":"
+VECTOR        :  ":" ID | NUM
 ID            : (".")⁰ ("_")¹ (LETTRE | epsilon) (LETTRE|CHIFFRE|"."|"_")⁰
 //
 //

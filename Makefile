@@ -4,11 +4,13 @@ FLAGS_L = -o
 OBJ = ./obj
 LEX = ./analy_lex
 SYM = ./symbole_table
+ERR = ./errors
+SYN = ./analy_syn
 
-main : ${OBJ}/main.o ${OBJ}/analy_lex_func.o ${OBJ}/symb_table_func.o
-	${CC} ${OBJ}/main.o ${OBJ}/analy_lex_func.o ${OBJ}/symb_table_func.o ${FLAGS_L} main
+main : ${OBJ}/main.o ${OBJ}/analy_lex_func.o ${OBJ}/symb_table_func.o ${OBJ}/analy_syn_func.o ${OBJ}/errors_func.o
+	${CC} ${OBJ}/main.o ${OBJ}/analy_lex_func.o ${OBJ}/symb_table_func.o  ${OBJ}/analy_syn_func.o ${OBJ}/errors_func.o ${FLAGS_L} main
 
-${OBJ}/main.o : main.c ${LEX}/analy_lex_func.h
+${OBJ}/main.o : main.c ${LEX}/analy_lex_func.h ${SYN}/analy_syn_func.h
 	${CC} ${FLAGS_C} main.c -o $@
 
 ${OBJ}/analy_lex_func.o : ${LEX}/analy_lex_func.c	${LEX}/analy_lex_func.h ${LEX}/analy_lex_dec.h ${SYM}/symb_table_func.h
@@ -16,3 +18,9 @@ ${OBJ}/analy_lex_func.o : ${LEX}/analy_lex_func.c	${LEX}/analy_lex_func.h ${LEX}
 
 ${OBJ}/symb_table_func.o : ${SYM}/symb_table_func.c	${SYM}/symb_table_dec.h ${SYM}/symb_table_func.h
 		${CC} ${FLAGS_C} ${SYM}/symb_table_func.c -o $@
+
+${OBJ}/analy_syn_func.o : ${SYN}/analy_syn_func.c	${SYN}/analy_syn_func.h ${SYN}/analy_syn_dec.h ${ERR}/errors_func.h
+			${CC} ${FLAGS_C} ${SYN}/analy_syn_func.c -o $@
+
+${OBJ}/errors_func.o : ${ERR}/errors_func.c ${ERR}/errors_dec.h ${ERR}/errors_func.h
+			${CC} ${FLAGS_C} ${ERR}/errors_func.c -o $@

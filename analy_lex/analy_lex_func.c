@@ -371,8 +371,14 @@ int analy_lex(char *filename) {
     if(Token_Cour->TOKEN != NULL_TOKEN) {
       push();
     }
+    if(Car_Cour == EOF) {
+      Token_Cour->TOKEN = EOF_TOKEN ;
+      Token_Cour->WORD=strcpy(Token_Cour->WORD,"eof");
+      push();
+    }
   }
+
   show();
-  symb_show();
+  //symb_show();
   return 0;
 }
