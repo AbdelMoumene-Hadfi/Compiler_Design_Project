@@ -40,7 +40,7 @@ BOUCLE_WHILE  : while "(" COND ")" "{" INST "}"
 BOUCLE_FOR    : for "(" ID "in" SEQ ")" "{" INST "}"
 PRINT         : print "(" EXPR ")"
 INPUT         : readline("//msg")
-CALL_FUNCTION : EXPR (EXPR,)
+CALL_FUNCTION : ID (EXPR,)
 FUNCTION      : "function" "(" VAR_FUNCTION ")" ["{"] INST ["return" "("] VAR [")"] ["}"]
 //
 CHIFFRE       : "0"|..|"9"
@@ -66,8 +66,22 @@ AFFOP_LEFT    : "<-" | "<<-" | "="
 AFFOP_RIGHT   : "->" | "->>"
 ARTHOP        : "+" | "-"
 MULTOP        : "*" | "/" | "^" | "%%" | "%/%"
-VAL           : BOOLEAN | NUMERIC | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR | LIST | MATRICE | ARRAY
+VAL           : BOOLEAN | NUM | INTEGER | COMPLEX | CHARACTER | RAW | VECTOR | LIST | MATRICE | ARRAY
 ///
+INST          : ID B| BOUCLE  | PRINT | SI
+AFTER_ID      : AFF_LEFT  | ( EXPR | epsilon ) C(AFF_RIGHT,EXPR)
+C(AFF_RIGHT,EXPR) : AFF_RIGHT ID
+EXPR          : TERM  [ARTHOP  TERM]
+TERM          : FACT  [MULTOP  FACT]
+FACT          : VAL | "(" EXPR | ID ("," EXPR | ID) ")"  |  | epsilon
+AFF_LEFT      : AFF_LEFT INST
+SI            : if "(" COND ")" "{" INST "}" [ else "{" INST "}" | "epsilon" ]
+BOUCLE        : BOUCLE_FOR | BOUCLE_WHILE
+BOUCLE_WHILE  : while "(" COND ")" "{" INST "}"
+BOUCLE_FOR    : for "(" ID "in" SEQ ")" "{" INST "}"
+PRINT         : print "(" EXPR ")"
+INPUT         : readline("//msg")
+FUNCTION      : "function" "(" VAR_FUNCTION ")" ["{"] INST ["return" "("] VAR [")"] ["}"]
 
 ///
 TOKENS :

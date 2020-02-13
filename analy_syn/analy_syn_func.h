@@ -7,7 +7,7 @@ void Test_Symbole(TOKENS token,ERRORS erreur) ;
 void INSTS() ;
 void INST() ;
 //
-void ASSIGN(void) ;
+void AFTER_ID(void) ;
 void LEFT_ASSIGN(void) ;
 void RIGHT_ASSIGN(void) ;
 //
