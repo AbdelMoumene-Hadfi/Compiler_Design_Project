@@ -40,7 +40,7 @@ BOUCLE_WHILE  : while "(" COND ")" "{" INST "}"
 BOUCLE_FOR    : for "(" ID "in" SEQ ")" "{" INST "}"
 PRINT         : print "(" EXPR ")"
 INPUT         : readline("//msg")
-CALL_FUNCTION : ID (ID,)
+CALL_FUNCTION : EXPR (EXPR,)
 FUNCTION      : "function" "(" VAR_FUNCTION ")" ["{"] INST ["return" "("] VAR [")"] ["}"]
 //
 CHIFFRE       : "0"|..|"9"
