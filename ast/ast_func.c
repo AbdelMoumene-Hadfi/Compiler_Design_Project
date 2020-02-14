@@ -9,6 +9,23 @@ AST_NODE *new_ast_node(Node_Type type,AST_NODE *left,AST_NODE *right) {
 
   return node;
 }
+AST_NODE *new_ast_statement_node(AST_Node_Statement **statements, int statement_count , AST_NODE *statement) {
+  AST_Node_Statement *node = malloc(sizeof(AST_Node_Statement));
+  node->type = STATEMENT_NODE ;
+  if(statements==NULL) {
+    statements = (AST_Node_Statement **)malloc(sizeof(AST_Node_Statement *));
+    statements[0]=(AST_Node_Statement *)statement;
+    statement_count = 1;
+  }
+  else {
+    statements = (AST_Node_Statement **)realloc(statements,(statement_count+1)*sizeof(AST_Node_Statement *));
+    statements[statement_count]=(AST_Node_Statement *)statement;
+    statement_count++;
+  }
+  node->statements = (AST_NODE**)statements ;
+  node->count_statement = statement_count;
+  return (AST_NODE*)node ;
+}
 AST_NODE *new_ast_simple_node(int statement_type) {
 	   AST_Node_Simple *node = malloc (sizeof (AST_Node_Simple));
 	   node->type = SIMPLE_NODE;

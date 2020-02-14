@@ -1,5 +1,6 @@
 #include "../symbole_table/symb_table_dec.h"
 typedef enum Node_Type {
+  STATEMENT_NODE,
   BASIC_NODE,
   SIMPLE_NODE,
   CONST_NODE,
@@ -59,6 +60,12 @@ typedef struct AST_Node_Const{
   Type_Sym const_type;
   Values val;
 }AST_Node_Const;
+//
+typedef struct AST_Node_Statement{
+  Node_Type type ;
+  AST_NODE **statements ;
+  int count_statement;
+}AST_Node_Statement;
 //
 typedef struct AST_Node_Simple {
   Node_Type type ;
