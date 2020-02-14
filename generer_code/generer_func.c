@@ -20,7 +20,6 @@ MNEMON_STR afficher_mnemon_str[20]={
   {HLT,"HLT"}
 };
 void generer1(MNEMONICS mne) {
-  printf("pc --> %d\n",PC);
   if(PC==TAILLECODE) {}
   else {
     Pcode[PC].MNE=mne ;
@@ -28,7 +27,6 @@ void generer1(MNEMONICS mne) {
   }
 }
 void generer2(MNEMONICS mne,int entier) {
-  printf("pc --> %d\n",PC);
   if(PC==TAILLECODE) {}
   else {
     Pcode[PC].MNE=mne ;
@@ -39,6 +37,10 @@ void generer2(MNEMONICS mne,int entier) {
 }
 void afficher_pcode() {
   for(int i=0;i<PC;i++) {
-    printf("%s\n",afficher_mnemon_str[Pcode[PC].MNE].WORD);
+    printf("%s  ",afficher_mnemon_str[Pcode[i].MNE].WORD);
+    if(Pcode[i].MNE == LDI || Pcode[i].MNE == LDA) {
+      printf("%d\n",Pcode[i].ENTIER);
+    }
+    else{printf("\n");}
   }
 }
